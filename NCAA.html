@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCAA Division I Men's Soccer Championship</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #ffd700;
+            font-weight: 300;
+        }
+        
+        .tournament-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 200px;
+            transition: transform 0.3s ease;
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .info-card h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .bracket-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            overflow-x: auto;
+        }
+        
+        .bracket {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 1000px;
+            gap: 30px;
+        }
+        
+        .round {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .round h3 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        
+        .matchup {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .matchup:hover {
+            transform: scale(1.02);
+        }
+        
+        .team {
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s ease;
+        }
+        
+        .team:last-child {
+            border-bottom: none;
+        }
+        
+        .team:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .team.winner {
+            background-color: #d4edda;
+            font-weight: bold;
+        }
+        
+        .seed {
+            background: #2a5298;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .team-name {
+            flex: 1;
+            font-weight: 600;
+        }
+        
+        .score {
+            font-weight: bold;
+            color: #2a5298;
+            margin-left: 10px;
+        }
+        
+        .championship {
+            text-align: center;
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #333;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px;
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .championship h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .champion-team {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .tournament-info {
+                gap: 20px;
+            }
+            .info-card {
+                min-width: 150px;
+                padding: 15px;
+            }
+            .bracket {
+                gap: 15px;
+            }
+            .team {
+                padding: 10px;
+            }
+        }
+        
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>NCAA DIVISION I MEN'S SOCCER CHAMPIONSHIP</h1>
+        <p class="subtitle">2024 Tournament • Road to the College Cup</p>
+    </header>
+
+    <div class="tournament-info">
+        <div class="info-card">
+            <h3>Tournament Format</h3>
+            <p>Single Elimination<br>16 Teams</p>
+        </div>
+        <div class="info-card">
+            <h3>Championship Game</h3>
+            <p>December 15, 2024<br>Cary, NC</p>
+        </div>
+        <div class="info-card">
+            <h3>Current Round</h3>
+            <p>Round of 16<br>In Progress</p>
+        </div>
+    </div>
+
+    <div class="bracket-container">
+        <div class="bracket">
+            <!-- Round of 16 -->
+            <div class="round">
+                <h3>Round of 16</h3>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">1</span>
+                            <span class="team-name">Duke</span>
+                        </div>
+                        <span class="score">3</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">16</span>
+                            <span class="team-name">Colgate</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">8</span>
+                            <span class="team-name">Stanford</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">9</span>
+                            <span class="team-name">SMU</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">4</span>
+                            <span class="team-name">Indiana</span>
+                        </div>
+                        <span class="score">4</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">13</span>
+                            <span class="team-name">Rhode Island</span>
+                        </div>
+                        <span class="score">0</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">5</span>
+                            <span class="team-name">Notre Dame</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">12</span>
+                            <span class="team-name">UC Santa Barbara</span>
+                        </div>
+                        <span class="score">3</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">2</span>
+                            <span class="team-name">Wake Forest</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">15</span>
+                            <span class="team-name">Albany</span>
+                        </div>
+                        <span class="score">0</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">7</span>
+                            <span class="team-name">Pittsburgh</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">10</span>
+                            <span class="team-name">Washington</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">3</span>
+                            <span class="team-name">North Carolina</span>
+                        </div>
+                        <span class="score">3</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">14</span>
+                            <span class="team-name">Denver</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">6</span>
+                            <span class="team-name">Georgetown</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">11</span>
+                            <span class="team-name">Virginia Tech</span>
+                        </div>
+                        <span class="score">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quarterfinals -->
+            <div class="round">
+                <h3>Quarterfinals</h3>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">1</span>
+                            <span class="team-name">Duke</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">8</span>
+                            <span class="team-name">Stanford</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">4</span>
+                            <span class="team-name">Indiana</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">12</span>
+                            <span class="team-name">UC Santa Barbara</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">2</span>
+                            <span class="team-name">Wake Forest</span>
+                        </div>
+                        <span class="score">3</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">10</span>
+                            <span class="team-name">Washington</span>
+                        </div>
+                        <span class="score">0</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">3</span>
+                            <span class="team-name">North Carolina</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">6</span>
+                            <span class="team-name">Georgetown</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Semifinals -->
+            <div class="round">
+                <h3>College Cup Semifinals</h3>
+
+                <div class="matchup">
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">1</span>
+                            <span class="team-name">Duke</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">12</span>
+                            <span class="team-name">UC Santa Barbara</span>
+                        </div>
+                        <span class="score">0</span>
+                    </div>
+                </div>
+
+                <div class="matchup">
+                    <div class="team">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">2</span>
+                            <span class="team-name">Wake Forest</span>
+                        </div>
+                        <span class="score">1</span>
+                    </div>
+                    <div class="team winner">
+                        <div style="display: flex; align-items: center;">
+                            <span class="seed">3</span>
+                            <span class="team-name">North Carolina</span>
+                        </div>
+                        <span class="score">2</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Championship -->
+            <div class="round">
+                <div class="championship">
+                    <h3>🏆 NCAA CHAMPIONS 🏆</h3>
+                    <div class="matchup" style="margin: 20px 0; max-width: 300px; margin-left: auto; margin-right: auto;">
+                        <div class="team">
+                            <div style="display: flex; align-items: center;">
+                                <span class="seed">1</span>
+                                <span class="team-name">Duke</span>
+                            </div>
+                            <span class="score">2</span>
+                        </div>
+                        <div class="team winner">
+                            <div style="display: flex; align-items: center;">
+                                <span class="seed">3</span>
+                                <span class="team-name">North Carolina</span>
+                            </div>
+                            <span class="score">3</span>
+                        </div>
+                    </div>
+                    <div class="champion-team">🎉 NORTH CAROLINA TAR HEELS 🎉</div>
+                    <p style="margin-top: 15px; color: #666;">2024 NCAA Division I Men's Soccer Champions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 NCAA Division I Men's Soccer Championship Tournament</p>
+        <p style="margin-top: 10px; opacity: 0.8;">All games subject to change • Check official NCAA website for updates</p>
+    </footer>
+</body>
+
+</html>

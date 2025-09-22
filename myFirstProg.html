@@ -1,0 +1,43 @@
+<!--Rachel Hoopes-->
+<!--My first HTML file-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution on Input and Output</title>
+</head>
+
+<body>
+    <script>
+        var sFirstName;
+        var sLastName;
+        var sStreetAddress;
+        var sCity;
+        var sState;
+        var iBirthYear;
+        var iCurrentYear;
+        var iAge;
+
+        sFirstName = prompt("What is your first name: ");
+        sLastName = prompt("What is your last name: ");
+        sStreetAddress = prompt("What is your street address: ");
+        sCity = prompt("What city do you live in: ");
+        sState = prompt("What state do you live in: ");
+        iBirthYear = parseInt(prompt("What is your birth year: "));
+
+        iCurrentYear = new Date().getFullYear();
+        iAge = iCurrentYear - iBirthYear;
+
+        alert(
+            sFirstName + " " + sLastName + "\n" +
+            sStreetAddress + "\n" +
+            sCity + "\t" + sState + "\n" +
+            "In " + iCurrentYear + " " + sFirstName + " was " + iAge + " years old"
+        );
+    </script>
+</body>
+
+</html>
